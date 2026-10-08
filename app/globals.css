@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colores de la marca en Instagram: verde SUN, sol rojo, crema y kraft */
+  --color-cal: #f4eee2;
+  --color-blanco: #fffdf8;
+  --color-oliva: #576e28;
+  --color-oliva-2: #4a5e21;
+  --color-monte: #232c12;
+  --color-salvia: #8a9a6a;
+  --color-musgo: #5f6446;
+  --color-ladrillo: #b24d3a;
+  --color-kraft: #825130;
+  --color-arcilla: #dcc8a8;
+  --color-tinta: #22261a;
+  --color-linea: #ddd4c2;
+
+  --font-display: var(--font-ibarra), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-albert), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-sol: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cal font-sans text-tinta antialiased;
+    font-feature-settings: "kern", "liga";
+  }
+  ::selection {
+    @apply bg-ladrillo text-blanco;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ladrillo;
+  }
+  [id] {
+    scroll-margin-top: 4.5rem;
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Noche ocupada en el calendario: rayado de obra, no un color más. */
+@utility ocupado {
+  background-image: repeating-linear-gradient(135deg, transparent 0 5px, rgb(168 90 60 / 0.16) 5px 6px);
+}
+
+@keyframes acercar {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+@utility hero-zoom {
+  animation: acercar 2.4s var(--ease-sol) both;
+}
+
+@keyframes desfile {
+  to { transform: translateX(-100%); }
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+@utility girar-lento {
+  animation: girar 60s linear infinite;
+}
+
+@custom-variant hover (&:hover) and (@media (hover: hover) and (pointer: fine));
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
